@@ -11,18 +11,8 @@
 #include <strings.h>
 #include <fcntl.h>
 #include <sys/select.h>
-#include <signal.h>
 #include "string_manip.h"
 #include "networkIO.h"
-
-//Handle SIGINT
-void terminate( int param ){
-  printf("You can't kill me!\n");
-}
-
-void sigint_handler(int sig){
-  //signal(SIGINT, SIG_DFL);
-}
 
 //print the request made by the client to the terminal
 void print_request( char * name, char * request, int filtered ){
@@ -196,10 +186,6 @@ int http_request( char * request, char ** buffer, char * host ){
 
 int main( int argc, char * argv[] ){
 
-  void (*prev_fn)(int);
-
-  prev_fn = signal (SIGINT,terminate);
-  if (prev_fn==SIG_IGN) signal (SIGINT,SIG_IGN);
   int sock = socket( PF_INET, SOCK_STREAM, 0 );
 
   int optval = 1;
